@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Integration tests of migrations makemigrations From an existing database 1`] = `
+{
+  "db": {
+    "UserModel": {
+      "className": "UserModel",
+      "columns": [
+        {
+          "autoincrement": true,
+          "name": "id",
+          "nullable": false,
+          "primaryKey": true,
+          "property": "id",
+          "type": "int",
+        },
+        {
+          "length": 255,
+          "name": "user",
+          "nullable": false,
+          "property": "user",
+          "type": "varchar",
+        },
+        {
+          "length": 51,
+          "name": "password",
+          "nullable": true,
+          "property": "password",
+          "type": "char",
+        },
+        {
+          "name": "age",
+          "nullable": true,
+          "property": "age",
+          "type": "int",
+        },
+        {
+          "name": "created",
+          "nullable": false,
+          "property": "created",
+          "type": "datetime",
+        },
+      ],
+      "indexes": [
+        {
+          "fields": [
+            "user",
+          ],
+          "name": "user_idx",
+        },
+      ],
+      "name": "UserModel",
+    },
+  },
+  "knestVersion": "",
+  "version": 2,
+}
+`;
+
+exports[`Integration tests of migrations makemigrations New database from 0 1`] = `
+{
+  "db": {
+    "UserModel": {
+      "className": "UserModel",
+      "columns": [
+        {
+          "autoincrement": true,
+          "name": "id",
+          "nullable": false,
+          "primaryKey": true,
+          "property": "id",
+          "type": "int",
+        },
+        {
+          "length": 255,
+          "name": "user",
+          "nullable": false,
+          "property": "user",
+          "type": "varchar",
+        },
+        {
+          "length": 51,
+          "name": "password",
+          "nullable": true,
+          "property": "password",
+          "type": "char",
+        },
+        {
+          "name": "age",
+          "nullable": true,
+          "property": "age",
+          "type": "int",
+        },
+        {
+          "name": "created",
+          "nullable": false,
+          "property": "created",
+          "type": "datetime",
+        },
+      ],
+      "indexes": [
+        {
+          "fields": [
+            "user",
+          ],
+          "name": "user_idx",
+        },
+      ],
+      "name": "UserModel",
+    },
+  },
+  "knestVersion": "",
+  "version": 1,
+}
+`;

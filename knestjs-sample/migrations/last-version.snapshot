@@ -1,0 +1,1 @@
+{"knestVersion":"","db":{"UserModel":{"name":"UserModel","className":"UserModel","columns":[{"name":"id","type":"int","autoincrement":true,"nullable":false,"property":"id"},{"name":"user","type":"varchar","length":255,"nullable":false,"property":"user"}],"indexes":[]}},"version":1}
