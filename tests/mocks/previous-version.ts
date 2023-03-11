@@ -1,4 +1,4 @@
-import { Snapshot } from '../../lib/services/migrations.service'
+import { Snapshot } from '../../src/services/migrations.service'
 
 export const oldSnapshot1: Snapshot = {
     version: 1,
