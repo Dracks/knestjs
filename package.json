@@ -1,8 +1,13 @@
 {
   "name": "@knestjs/core",
-  "version": "0.0.1-alpha",
+  "version": "0.0.1-alpha1",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/Dracks/knestjs.git"
+  },
+  "keywords": ["nestjs", "knexjs", "ORM", "migrations", "automigrations", "django-like"],
   "scripts": {
     "test": "jest --config jest.ts",
     "test:cov": "jest --coverage --config jest.ts",

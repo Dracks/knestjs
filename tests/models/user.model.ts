@@ -1,4 +1,4 @@
-import {Table, Column} from '../../'
+import {Table, Column} from '../../src'
 
 @Table<UserModel>({
   indexes: [{fields: ['user'], name:'user_idx'}]
