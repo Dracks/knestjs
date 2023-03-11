@@ -5,7 +5,7 @@ export default {
     "json",
     "ts"
   ],
-  rootDir: "lib",
+  rootDir: "src",
   roots: ["<rootDir>", '../tests'],
   testRegex: ".*\\.spec\\.ts$",
   transform: {
@@ -15,5 +15,9 @@ export default {
     "**/*.(t|j)s"
   ],
   coverageDirectory: "../coverage",
+  coverageReporters: [
+      "text",
+      "cobertura"
+  ],
   testEnvironment: "node"
 }

@@ -3,7 +3,7 @@ import {INestApplication} from '@nestjs/common'
 import * as path from 'path'
 import {promises as fs} from 'fs'
 
-import {KnestModule, MigrationsService} from '../'
+import {KnestModule, MigrationsService} from '../src'
 import { UserModel } from './models/user.model'
 import {oldSnapshot1} from './mocks/previous-version'
 
