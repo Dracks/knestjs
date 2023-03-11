@@ -5,6 +5,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest --config jest.ts",
+    "test:cov": "jest --coverage --config jest.ts",
     "build": "tsc",
     "build:watch": "tsc --watch"
   },
