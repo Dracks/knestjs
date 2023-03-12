@@ -1,9 +1,11 @@
 # Knestjs
-[![codecov](https://codecov.io/gh/Dracks/knestjs/branch/main/graph/badge.svg?token=5ZD6Q7O2HF)](https://codecov.io/gh/Dracks/knestjs)
-[![CodeFactor](https://www.codefactor.io/repository/github/dracks/knestjs/badge)](https://www.codefactor.io/repository/github/dracks/knestjs)
 
 Knestjs search to be a Nestjs ORM in which you write the models once and only once.
 This is done creating migrations automatically from the models that you create.
+
+[![codecov](https://codecov.io/gh/Dracks/knestjs/branch/main/graph/badge.svg?token=5ZD6Q7O2HF)](https://codecov.io/gh/Dracks/knestjs)
+[![CodeFactor](https://www.codefactor.io/repository/github/dracks/knestjs/badge)](https://www.codefactor.io/repository/github/dracks/knestjs)
+
 
 
 ## How to use it
