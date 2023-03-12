@@ -43,10 +43,10 @@ exports[`Integration tests of migrations makemigrations From an existing databas
       ],
       "indexes": [
         {
-          "columns": [
+          "name": "user_idx",
+          "properties": [
             "user",
           ],
-          "name": "user_idx",
         },
       ],
       "name": "UserModel",
@@ -108,7 +108,13 @@ exports[`Integration tests of migrations makemigrations Multiple tables from 0 1
           "type": "datetime",
         },
       ],
-      "indexes": [],
+      "indexes": [
+        {
+          "properties": [
+            "privileges",
+          ],
+        },
+      ],
       "name": "GroupModel",
     },
     "UserModel": {
@@ -151,10 +157,10 @@ exports[`Integration tests of migrations makemigrations Multiple tables from 0 1
       ],
       "indexes": [
         {
-          "columns": [
+          "name": "user_idx",
+          "properties": [
             "user",
           ],
-          "name": "user_idx",
         },
       ],
       "name": "UserModel",
@@ -172,6 +178,7 @@ exports.up = (knex) => knex.schema.createTable("GroupModel", (table) => {
     table.string("name", 255).notNullable();
     table.string("privileges", 51).notNullable();
     table.datetime("created").notNullable();
+    table.index(["privileges"], "");
 })
   .createTable("UserModel", (table) => {
     table.increments("id");
@@ -230,10 +237,10 @@ exports[`Integration tests of migrations makemigrations New database from 0 1`] 
       ],
       "indexes": [
         {
-          "columns": [
+          "name": "user_idx",
+          "properties": [
             "user",
           ],
-          "name": "user_idx",
         },
       ],
       "name": "UserModel",

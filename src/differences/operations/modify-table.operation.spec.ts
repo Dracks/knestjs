@@ -33,7 +33,7 @@ describe(ModifyTable.name, ()=>{
     })
 
     it('Add index', ()=>{
-        const idxInfo : IndexInfo<TableFields> = {name: 'idx_1', columns: ["first_name", "last_name"]}
+        const idxInfo : IndexInfo<TableFields> = {name: 'idx_1', properties: ["first_name", "last_name"]}
         const subject = new ModifyTable(emptyTable, {...emptyTable, indexes: [idxInfo]})
 
         expect(subject.hasChanges).toBeTruthy()
@@ -43,7 +43,7 @@ describe(ModifyTable.name, ()=>{
     })
 
     it('Drop index', ()=>{
-        const idxInfo : IndexInfo<TableFields> = {name: 'idx_1', columns: ["first_name", "last_name"]}
+        const idxInfo : IndexInfo<TableFields> = {name: 'idx_1', properties: ["first_name", "last_name"]}
         const subject = new ModifyTable({...emptyTable, indexes: [idxInfo]}, emptyTable)
 
         expect(subject.hasChanges).toBeTruthy()

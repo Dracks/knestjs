@@ -21,7 +21,7 @@ export interface Snapshot {
 const buildTableSnapshot = (model: Constructor<unknown>) : TableSnapshot => {
     const tableMetadata : TableConfig<unknown> = Reflect.getMetadata(KNEST_TABLE_INFO, model) ?? {};
     const columns : ColumnInfo[] = Reflect.getMetadata(KNEST_COLUMNS_INFO, model) ?? [];
-    const indexes : IndexInfo<unknown>[] = (tableMetadata.indexes ?? []).map(idx => ({name: getIndexName(idx), columns: idx.columns}))
+    const indexes : IndexInfo<unknown>[] = (tableMetadata.indexes ?? []).map(idx => ({name: getIndexName(idx), properties: idx.properties}))
     return {
         name: getTableName<unknown>(model),
         className: model.name,

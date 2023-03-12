@@ -2,7 +2,7 @@ import {ColumnInfo} from './column.types'
 
 export interface IndexInfo<T> {
     name?: string
-    columns: Array<keyof T>
+    properties: Array<keyof T>
 }
 
 export interface TableSnapshot<T=unknown> {

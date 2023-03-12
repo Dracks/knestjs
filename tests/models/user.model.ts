@@ -1,7 +1,7 @@
 import {Table, Column} from '../../src'
 
 @Table<UserModel>({
-  indexes: [{columns: ['user'], name:'user_idx'}]
+  indexes: [{properties: ['user'], name:'user_idx'}]
 })
 export class UserModel {
 

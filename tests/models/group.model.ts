@@ -1,6 +1,7 @@
 import {Table, Column} from '../../src'
 
-@Table({
+@Table<GroupModel>({
+    indexes: [{properties: ['privileges']}]
 })
 export class GroupModel {
 

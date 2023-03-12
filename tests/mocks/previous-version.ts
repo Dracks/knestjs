@@ -44,13 +44,13 @@ export const oldSnapshot1: Snapshot = {
       ],
       "indexes": [
         {
-          "columns": [
+          "properties": [
             "user" as never,
           ],
           "name": "user_idx",
         },
         {
-          "columns": [
+          "properties": [
             "something-to-remove" as never,
           ],
           "name": "str_idx",

@@ -9,7 +9,7 @@ export class DropIndex<T=unknown> implements Operation {
 
     apply(): string {
         const idxName = JSON.stringify(this.index.name ?? '')
-        const columns = this.index.columns.map(columnName => JSON.stringify(columnName))
+        const columns = this.index.properties.map(columnName => JSON.stringify(columnName))
         return `dropIndex([${columns.join(',')}], ${idxName})`
     }
 }

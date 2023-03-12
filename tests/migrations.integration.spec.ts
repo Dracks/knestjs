@@ -52,6 +52,7 @@ describe('Integration tests of migrations', ()=>{
 
         afterEach(async ()=>{
             await fs.rm(migrationsFolder, {recursive: true})
+            await app.close()
         })
 
         it('New database from 0', async ()=>{
