@@ -12,26 +12,31 @@ export const oldSnapshot1: Snapshot = {
           "primaryKey": true,
           "property": "id",
           "type": "int",
+          "name": "id"
         },
         {
           "length": 10,
           "nullable": true,
           "property": "something-to-remove",
-          "type": 'varchar'
+          "type": 'varchar',
+          "name": 'to-remove'
         },
         {
           "length": 255,
           "nullable": false,
           "property": "user",
           "type": "varchar",
+          "name": "user"
         },
         {
           "length": 51,
           "nullable": true,
           "property": "password",
           "type": "char",
+          "name": 'password',
         },
         {
+            "name": 'created',
           "nullable": false,
           "property": "created",
           "type": "datetime",
@@ -39,13 +44,13 @@ export const oldSnapshot1: Snapshot = {
       ],
       "indexes": [
         {
-          "fields": [
+          "properties": [
             "user" as never,
           ],
           "name": "user_idx",
         },
         {
-          "fields": [
+          "properties": [
             "something-to-remove" as never,
           ],
           "name": "str_idx",

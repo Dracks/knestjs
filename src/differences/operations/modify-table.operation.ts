@@ -1,11 +1,13 @@
 import { TableSnapshot } from "../../table.types";
 import { AbstractTableOperation } from "./abstract-table.operation";
 import { AddColumn } from "./add-column.operation";
+import { AddIndex } from "./add-index.operation";
 import { DropColumn } from "./drop-column.operation";
+import { DropIndex } from "./drop-index";
 import { Operation } from "./operation.type";
 
-export class ModifyTable extends AbstractTableOperation implements Operation {
-    constructor(readonly beforeInfo: TableSnapshot, readonly afterInfo: TableSnapshot){super()}
+export class ModifyTable<B = unknown,A=unknown> extends AbstractTableOperation implements Operation {
+    constructor(readonly beforeInfo: TableSnapshot<B>, readonly afterInfo: TableSnapshot<A>){super()}
 
     private getNewColumns(){
         const oldColumns = new Set(this.beforeInfo.columns.map(column => column.name))
@@ -32,13 +34,29 @@ export class ModifyTable extends AbstractTableOperation implements Operation {
         return [...newColumns, ...deletedColumns]
     }
 
+    private getNewIndexes(){
+        const oldIndexes = new Set(this.beforeInfo.indexes.map(idx=>idx.name))
+
+        return this.afterInfo.indexes.filter(idx => !oldIndexes.has(idx.name))
+            .map(idx => new AddIndex<A>(idx))
+    }
+
+    private getDeletedIndexes(){
+        const newIndexes = new Set(this.afterInfo.indexes.map(idx=>idx.name))
+
+        return this.beforeInfo.indexes.filter(idx => !newIndexes.has(idx.name))
+            .map(idx => new DropIndex<B>(idx))
+    }
+
     private getChangedIndexes(){
         // check new columns
+        const newIndexes = this.getNewIndexes()
 
         // check differences in columns
 
         // check deleted columns
-        return []
+        const deletedIndexes = this.getDeletedIndexes()
+        return [...newIndexes, ...deletedIndexes]
     }
 
     protected getInternalChanges(): Operation[]{
