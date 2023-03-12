@@ -1,6 +1,6 @@
 {
   "name": "@knestjs/core",
-  "version": "0.0.1-alpha1",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": {

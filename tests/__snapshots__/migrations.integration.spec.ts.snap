@@ -43,7 +43,7 @@ exports[`Integration tests of migrations makemigrations From an existing databas
       ],
       "indexes": [
         {
-          "fields": [
+          "columns": [
             "user",
           ],
           "name": "user_idx",
@@ -55,6 +55,136 @@ exports[`Integration tests of migrations makemigrations From an existing databas
   "knestVersion": "",
   "version": 2,
 }
+`;
+
+exports[`Integration tests of migrations makemigrations From an existing database 2`] = `
+"
+exports.up = (knex) => knex.schema.alterTable("UserModel", (table) => {
+    table.integer("age").nullable();
+    table.dropColumn("to-remove");
+    table.dropIndex(["something-to-remove"], "str_idx");
+});
+
+exports.down = (knex) => knex.schema.alterTable("UserModel", (table) => {
+    table.string("to-remove", 10).nullable();
+    table.dropColumn("age");
+    table.index(["something-to-remove"], "str_idx");
+});
+"
+`;
+
+exports[`Integration tests of migrations makemigrations Multiple tables from 0 1`] = `
+{
+  "db": {
+    "GroupModel": {
+      "className": "GroupModel",
+      "columns": [
+        {
+          "autoincrement": true,
+          "name": "id",
+          "nullable": false,
+          "primaryKey": true,
+          "property": "id",
+          "type": "int",
+        },
+        {
+          "length": 255,
+          "name": "name",
+          "nullable": false,
+          "property": "name",
+          "type": "varchar",
+        },
+        {
+          "length": 51,
+          "name": "privileges",
+          "nullable": false,
+          "property": "privileges",
+          "type": "char",
+        },
+        {
+          "name": "created",
+          "nullable": false,
+          "property": "created",
+          "type": "datetime",
+        },
+      ],
+      "indexes": [],
+      "name": "GroupModel",
+    },
+    "UserModel": {
+      "className": "UserModel",
+      "columns": [
+        {
+          "autoincrement": true,
+          "name": "id",
+          "nullable": false,
+          "primaryKey": true,
+          "property": "id",
+          "type": "int",
+        },
+        {
+          "length": 255,
+          "name": "user",
+          "nullable": false,
+          "property": "user",
+          "type": "varchar",
+        },
+        {
+          "length": 51,
+          "name": "password",
+          "nullable": true,
+          "property": "password",
+          "type": "char",
+        },
+        {
+          "name": "age",
+          "nullable": true,
+          "property": "age",
+          "type": "int",
+        },
+        {
+          "name": "created",
+          "nullable": false,
+          "property": "created",
+          "type": "datetime",
+        },
+      ],
+      "indexes": [
+        {
+          "columns": [
+            "user",
+          ],
+          "name": "user_idx",
+        },
+      ],
+      "name": "UserModel",
+    },
+  },
+  "knestVersion": "",
+  "version": 1,
+}
+`;
+
+exports[`Integration tests of migrations makemigrations Multiple tables from 0 2`] = `
+"
+exports.up = (knex) => knex.schema.createTable("GroupModel", (table) => {
+    table.increments("id");
+    table.string("name", 255).notNullable();
+    table.string("privileges", 51).notNullable();
+    table.datetime("created").notNullable();
+})
+  .createTable("UserModel", (table) => {
+    table.increments("id");
+    table.string("user", 255).notNullable();
+    table.string("password", 51).nullable();
+    table.integer("age").nullable();
+    table.datetime("created").notNullable();
+    table.index(["user"], "user_idx");
+});
+
+exports.down = (knex) => knex.schema.dropTable("GroupModel")
+  .dropTable("UserModel");
+"
 `;
 
 exports[`Integration tests of migrations makemigrations New database from 0 1`] = `
@@ -100,7 +230,7 @@ exports[`Integration tests of migrations makemigrations New database from 0 1`] 
       ],
       "indexes": [
         {
-          "fields": [
+          "columns": [
             "user",
           ],
           "name": "user_idx",
@@ -112,4 +242,19 @@ exports[`Integration tests of migrations makemigrations New database from 0 1`] 
   "knestVersion": "",
   "version": 1,
 }
+`;
+
+exports[`Integration tests of migrations makemigrations New database from 0 2`] = `
+"
+exports.up = (knex) => knex.schema.createTable("UserModel", (table) => {
+    table.increments("id");
+    table.string("user", 255).notNullable();
+    table.string("password", 51).nullable();
+    table.integer("age").nullable();
+    table.datetime("created").notNullable();
+    table.index(["user"], "user_idx");
+});
+
+exports.down = (knex) => knex.schema.dropTable("UserModel");
+"
 `;

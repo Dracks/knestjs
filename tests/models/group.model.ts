@@ -1,9 +1,8 @@
 import {Table, Column} from '../../src'
 
-@Table<UserModel>({
-  indexes: [{columns: ['user'], name:'user_idx'}]
+@Table({
 })
-export class UserModel {
+export class GroupModel {
 
     @Column({
         type: 'int',
@@ -18,20 +17,14 @@ export class UserModel {
         length: 255,
         nullable: false,
     })
-    user!: string;
+    name!: string;
 
     @Column({
         type: 'char',
         length: 51,
-        nullable: true
+        nullable: false
     })
-    password?: string;
-
-    @Column({
-        type: 'int',
-        nullable: true,
-    })
-    age?: number;
+    privileges?: string;
 
     @Column({
         type: 'datetime',

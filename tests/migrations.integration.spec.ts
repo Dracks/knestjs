@@ -5,6 +5,7 @@ import {promises as fs} from 'fs'
 
 import {KnestModule, MigrationsService} from '../src'
 import { UserModel } from './models/user.model'
+import { GroupModel } from './models/group.model'
 import {oldSnapshot1} from './mocks/previous-version'
 
 import 'reflect-metadata'
@@ -15,6 +16,12 @@ const snapshotName = 'db-status.snapshot'
 const getSnapshot = async ()=>{
     const contents = await fs.readFile(path.join(migrationsFolder,snapshotName))
     return JSON.parse(contents.toString())
+}
+
+const getMigrations = async (version: number)=>{
+    const code = `0000000${version}`.substr(-7)
+    const buffer = await fs.readFile(path.join(migrationsFolder, `${code}-new-migration.js`))
+    return buffer.toString()
 }
 
 describe('Integration tests of migrations', ()=>{
@@ -55,6 +62,7 @@ describe('Integration tests of migrations', ()=>{
             await app.get(MigrationsService).makeMigrations()
 
             expect(await getSnapshot()).toMatchSnapshot()
+            expect(await getMigrations(1)).toMatchSnapshot()
         })
 
         it('From an existing database', async ()=>{
@@ -67,6 +75,21 @@ describe('Integration tests of migrations', ()=>{
           await app.get(MigrationsService).makeMigrations()
 
           expect(await getSnapshot()).toMatchSnapshot()
+          expect(await getMigrations(2)).toMatchSnapshot()
+        })
+
+        it('Multiple tables from 0', async ()=>{
+            app.get(MigrationsService).registerModels([GroupModel])
+
+            await app.init()
+
+            expect(app).toBeTruthy()
+
+            await app.get(MigrationsService).makeMigrations()
+
+            expect(await getSnapshot()).toMatchSnapshot()
+            expect(await getMigrations(1)).toMatchSnapshot()
+
         })
     })
 

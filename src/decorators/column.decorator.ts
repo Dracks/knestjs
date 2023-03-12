@@ -1,4 +1,3 @@
-import { Constructor, Class } from 'type-fest';
 import {KNEST_COLUMNS_INFO} from '../constants'
 import { ColumnInfo, ColumnConfig } from '../column.types'
 

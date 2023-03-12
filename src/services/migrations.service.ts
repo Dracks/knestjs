@@ -7,8 +7,9 @@ import {KNEST_MIGRATIONS_CONFIG, KNEST_SNAPSHOT_NAME, KNEST_TABLE_INFO, KNEST_CO
 import {MigrationsConfig} from '../types'
 import {getTableName} from '../helpers/get-table-name'
 import {ColumnInfo} from '../column.types'
-import {TableSnapshot, TableConfig} from '../table.types'
+import {TableSnapshot, TableConfig, IndexInfo} from '../table.types'
 import {DbChanges} from '../differences/db-changes'
+import { getIndexName } from '../helpers/get-index-name'
 
 export interface Snapshot {
     knestVersion: string
@@ -20,6 +21,7 @@ export interface Snapshot {
 const buildTableSnapshot = (model: Constructor<unknown>) : TableSnapshot => {
     const tableMetadata : TableConfig<unknown> = Reflect.getMetadata(KNEST_TABLE_INFO, model) ?? {};
     const columns : ColumnInfo[] = Reflect.getMetadata(KNEST_COLUMNS_INFO, model) ?? [];
+    const indexes : IndexInfo<unknown>[] = (tableMetadata.indexes ?? []).map(idx => ({name: getIndexName(idx), columns: idx.columns}))
     return {
         name: getTableName<unknown>(model),
         className: model.name,

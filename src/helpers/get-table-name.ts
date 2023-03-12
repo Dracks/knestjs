@@ -4,7 +4,7 @@ import {TableConfig} from '../table.types'
 
 export const getTableName = <T>(model: Constructor<T>):string => {
     const metadata: TableConfig<T> = Reflect.getMetadata(KNEST_TABLE_INFO, model)
-    const originalName = metadata?.tableName ?? model.name;
+    const originalName = metadata?.name ?? model.name;
 
     return originalName
 }
