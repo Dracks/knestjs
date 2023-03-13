@@ -23,7 +23,8 @@ export class GroupModel {
     @Column({
         type: 'char',
         length: 51,
-        nullable: false
+        nullable: false,
+        name: 'role'
     })
     privileges?: string;
 

@@ -3,32 +3,11 @@ import {Knex} from 'knex'
 import {promises as fs} from 'fs'
 import {Constructor} from 'type-fest'
 import * as path from 'path'
-import {KNEST_MIGRATIONS_CONFIG, KNEST_SNAPSHOT_NAME, KNEST_TABLE_INFO, KNEST_COLUMNS_INFO, KNEX_INSTANCE} from '../constants'
+import {KNEST_MIGRATIONS_CONFIG, KNEST_SNAPSHOT_NAME, KNEX_INSTANCE} from '../constants'
 import {MigrationsConfig} from '../types'
-import {getTableName} from '../helpers/get-table-name'
-import {ColumnInfo} from '../column.types'
-import {TableSnapshot, TableConfig, IndexInfo} from '../table.types'
 import {DbChanges} from '../differences/db-changes'
-import { getIndexName } from '../helpers/get-index-name'
-
-export interface Snapshot {
-    knestVersion: string
-    db: Record<string, TableSnapshot>
-    version: number
-}
-
-// This should go into knest-models.service
-const buildTableSnapshot = (model: Constructor<unknown>) : TableSnapshot => {
-    const tableMetadata : TableConfig<unknown> = Reflect.getMetadata(KNEST_TABLE_INFO, model) ?? {};
-    const columns : ColumnInfo[] = Reflect.getMetadata(KNEST_COLUMNS_INFO, model) ?? [];
-    const indexes : IndexInfo<unknown>[] = (tableMetadata.indexes ?? []).map(idx => ({name: getIndexName(idx), properties: idx.properties}))
-    return {
-        name: getTableName<unknown>(model),
-        className: model.name,
-        columns: columns.map(column => ({name: column.property, ...column})),
-        indexes: tableMetadata.indexes ?? [],
-    }
-}
+import { Snapshot, TableSnapshot } from './snapshot.types'
+import { TableSnapshotFactory } from './table-snapshot'
 
 @Injectable()
 export class MigrationsService implements OnModuleInit, OnApplicationShutdown {
@@ -68,18 +47,18 @@ export class MigrationsService implements OnModuleInit, OnApplicationShutdown {
         models.forEach(model => this.models.push(model))
     }
 
-    private async generateMigrateFile(changes: DbChanges, version: number){
+    private async generateMigrateFile(changes: DbChanges<unknown, unknown>, version: number){
         const code = `000000${version}`.substr(-7)
         await fs.writeFile(path.join(this.config.folder, `${code}-new-migration.js`), changes.generate())
     }
 
     async makeMigrations(){
         const currentVersion :Snapshot = this.snapshot ?? {knestVersion:'', db: {}, version: 0};
-        const newTablesVersion = this.models.map(model => buildTableSnapshot(model))
+        const newTablesVersion = this.models.map(model => new TableSnapshotFactory(model))
         const registeredDb = newTablesVersion.reduce((ac, obj) => {
-          ac[obj.name] = obj
+          ac[obj.name] = obj.build()
           return ac
-        }, {} as Record<string, TableSnapshot>)
+      }, {} as Record<string, TableSnapshot<unknown>>)
 
         const dbChanges = new DbChanges(currentVersion.db, registeredDb)
         if (dbChanges.hasChanges){

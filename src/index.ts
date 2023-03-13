@@ -1,5 +1,5 @@
 export * from './knest.module'
-export * from './services/migrations.service'
+export * from './migrations/migrations.service'
 export * from './decorators/table.decorator'
 export * from './decorators/column.decorator'
 export {KNEX_INSTANCE} from './constants'

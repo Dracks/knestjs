@@ -1,15 +1,16 @@
-import { IndexInfo } from "../../table.types";
+
+import { IndexSnapshot } from "migrations/snapshot.types";
 import { Operation } from "./operation.type";
 
-export class DropIndex<T=unknown> implements Operation {
+export class DropIndex implements Operation {
 
 
-    constructor(private readonly index: IndexInfo<T>){
+    constructor(private readonly index: IndexSnapshot){
     }
 
     apply(): string {
-        const idxName = JSON.stringify(this.index.name ?? '')
-        const columns = this.index.properties.map(columnName => JSON.stringify(columnName))
+        const idxName = JSON.stringify(this.index.name)
+        const columns = this.index.columns.map(columnName => JSON.stringify(columnName))
         return `dropIndex([${columns.join(',')}], ${idxName})`
     }
 }

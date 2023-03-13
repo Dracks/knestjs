@@ -1,8 +1,8 @@
 import {Module, Global, DynamicModule} from '@nestjs/common'
 import knexConstructor from 'knex'
 import {KNEX_INSTANCE, KNEST_MIGRATIONS_CONFIG, KNEST_MODELS} from './constants'
-import {MigrationsService} from './services/migrations.service'
-import {KnestModelsService} from './services/knest-models.service'
+import {MigrationsService} from './migrations/migrations.service'
+import {KnestModelsService} from './migrations/knest-models.service'
 import {getTableProvider} from './helpers/get-table-provider'
 import { KnestModuleConfig } from './types'
 

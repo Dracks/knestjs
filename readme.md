@@ -68,12 +68,12 @@ My recomendation is to use some package like nestjs-command as shown in the [exa
 The following list is the main points I will like to address to consider the library in version 1
 
 * [x] creation and deletion of indexes
-  * [ ] Use change the property to the column name of indexes
+  * [x] Use change the property to the column name of indexes
 * [ ] tools to access the models directly (Extra package using objection?)  
 * [ ] Keep the ordering of the fields on modifications (Adding the after in the alter table)
 * [ ] Add the option to generate the migrations in typescript
 * [ ] Add the option to automatically change the properties and/or classes casing (f.e.: automatically transform to snake_case)
-* [ ] Split types for the declarations one that is the used in the interfaces, and another to work internally
+* [x] Split types for the declarations one that is the used in the interfaces, and another to work internally
 * [ ] Handle column mutation
 * [ ] Handle index mutation
 * [ ] Handle partial indexes

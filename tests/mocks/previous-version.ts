@@ -1,4 +1,4 @@
-import { Snapshot } from '../../src/services/migrations.service'
+import { Snapshot, TableSnapshot } from '../../src/migrations/snapshot.types'
 
 export const oldSnapshot1: Snapshot = {
     version: 1,
@@ -44,20 +44,16 @@ export const oldSnapshot1: Snapshot = {
       ],
       "indexes": [
         {
-          "properties": [
-            "user" as never,
-          ],
+          "columns": [ "user",],
           "name": "user_idx",
         },
         {
-          "properties": [
-            "something-to-remove" as never,
-          ],
+          "columns": [ "something-to-remove", ],
           "name": "str_idx",
         },
       ],
       "name": "UserModel",
-    },
+  } as TableSnapshot<unknown>,
   },
   "knestVersion": "",
 }

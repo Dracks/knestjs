@@ -1,4 +1,4 @@
-import { TableSnapshot } from "../../table.types";
+import { TableSnapshot } from "../../migrations/snapshot.types";
 import { AbstractTableOperation } from "./abstract-table.operation";
 import { AddColumn } from "./add-column.operation";
 import { AddIndex } from "./add-index.operation";
@@ -38,14 +38,14 @@ export class ModifyTable<B = unknown,A=unknown> extends AbstractTableOperation i
         const oldIndexes = new Set(this.beforeInfo.indexes.map(idx=>idx.name))
 
         return this.afterInfo.indexes.filter(idx => !oldIndexes.has(idx.name))
-            .map(idx => new AddIndex<A>(idx))
+            .map(idx => new AddIndex(idx))
     }
 
     private getDeletedIndexes(){
         const newIndexes = new Set(this.afterInfo.indexes.map(idx=>idx.name))
 
         return this.beforeInfo.indexes.filter(idx => !newIndexes.has(idx.name))
-            .map(idx => new DropIndex<B>(idx))
+            .map(idx => new DropIndex(idx))
     }
 
     private getChangedIndexes(){
