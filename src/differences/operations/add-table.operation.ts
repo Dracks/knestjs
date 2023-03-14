@@ -22,7 +22,6 @@ export class AddTable<T> extends AbstractTableOperation implements Operation{
     }
 
     apply(){
-        const internalChanges = this.getNewColumns()
         return `createTable(${JSON.stringify(this.tableInfo.name)}, ${this.applyInternalChanges()})`
     }
 }

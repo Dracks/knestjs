@@ -31,3 +31,5 @@ jobs:
     - run: npm run test:cov
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
+      # Seems there is slightly differences in the coverage of both versions
+      if: matrix.node-version == '16.x'
