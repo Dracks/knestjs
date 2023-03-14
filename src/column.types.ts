@@ -1,37 +1,23 @@
 
 export type ColumnType = 'int' | 'float' | 'double' | 'char' | 'varchar' | 'text' | 'date' | 'datetime' | 'time'
 
-export interface BaseColumnSnapshot {
-    name?: string,
-    type: ColumnType,
-    default?: unknown,
-    nullable: boolean,
-    primaryKey?: boolean
-    unique?: boolean
-}
 
-export interface IntColumnSnapshot extends BaseColumnSnapshot {
+export interface IntColumnConfig  {
     type: 'int'
     autoincrement?: boolean
 }
 
-export interface FloatColumnSnapshot extends BaseColumnSnapshot {
+export interface FloatColumnConfig  {
     type: 'float',
     precision: number,
     scale: number
 }
 
-export interface CharColumnSnapshot extends BaseColumnSnapshot{
+export interface CharColumnConfig {
     type: 'char' | 'varchar'
     length: number
 }
 
-export interface DateTimeColumnSnapshot extends BaseColumnSnapshot{
+export interface DateTimeColumnConfig {
     type: 'datetime' | 'date' | 'time'
-}
-
-export type ColumnConfig = IntColumnSnapshot | FloatColumnSnapshot | CharColumnSnapshot | DateTimeColumnSnapshot
-
-export type ColumnInfo = ColumnConfig & {
-    property: string
 }

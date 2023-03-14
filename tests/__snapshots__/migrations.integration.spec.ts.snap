@@ -43,10 +43,10 @@ exports[`Integration tests of migrations makemigrations From an existing databas
       ],
       "indexes": [
         {
-          "name": "user_idx",
-          "properties": [
+          "columns": [
             "user",
           ],
+          "name": "user_idx",
         },
       ],
       "name": "UserModel",
@@ -96,7 +96,7 @@ exports[`Integration tests of migrations makemigrations Multiple tables from 0 1
         },
         {
           "length": 51,
-          "name": "privileges",
+          "name": "role",
           "nullable": false,
           "property": "privileges",
           "type": "char",
@@ -110,9 +110,10 @@ exports[`Integration tests of migrations makemigrations Multiple tables from 0 1
       ],
       "indexes": [
         {
-          "properties": [
-            "privileges",
+          "columns": [
+            "role",
           ],
+          "name": "idx_privileges",
         },
       ],
       "name": "GroupModel",
@@ -157,10 +158,10 @@ exports[`Integration tests of migrations makemigrations Multiple tables from 0 1
       ],
       "indexes": [
         {
-          "name": "user_idx",
-          "properties": [
+          "columns": [
             "user",
           ],
+          "name": "user_idx",
         },
       ],
       "name": "UserModel",
@@ -176,9 +177,9 @@ exports[`Integration tests of migrations makemigrations Multiple tables from 0 2
 exports.up = (knex) => knex.schema.createTable("GroupModel", (table) => {
     table.increments("id");
     table.string("name", 255).notNullable();
-    table.string("privileges", 51).notNullable();
+    table.string("role", 51).notNullable();
     table.datetime("created").notNullable();
-    table.index(["privileges"], "");
+    table.index(["role"], "idx_privileges");
 })
   .createTable("UserModel", (table) => {
     table.increments("id");
@@ -237,10 +238,10 @@ exports[`Integration tests of migrations makemigrations New database from 0 1`] 
       ],
       "indexes": [
         {
-          "name": "user_idx",
-          "properties": [
+          "columns": [
             "user",
           ],
+          "name": "user_idx",
         },
       ],
       "name": "UserModel",

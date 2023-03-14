@@ -1,36 +1,36 @@
 
-import {TableSnapshot} from '../table.types'
+import { TableSnapshot } from '../migrations/snapshot.types'
 import { Change } from './change'
 import {AddTable, DropTable} from './operations'
 import { ModifyTable } from './operations/modify-table.operation'
 
-export class DbChanges {
+export class DbChanges<A,B> {
     readonly changes: Change[]
 
-    constructor(currentVersion: Record<string, TableSnapshot>, newVersion: Record<string, TableSnapshot>){
-        const newTables = this.getNewTablesChanges(currentVersion, newVersion)
+    constructor(private readonly currentVersion: Record<string, TableSnapshot<A>>, private readonly newVersion: Record<string, TableSnapshot<B>>){
+        const newTables = this.getNewTablesChanges()
 
-        const modifiedTables = this.getModifiedTablesChanges(currentVersion, newVersion)
+        const modifiedTables = this.getModifiedTablesChanges()
 
-        const deletedTables = this.getDeletedTablesChanges(currentVersion, newVersion)
+        const deletedTables = this.getDeletedTablesChanges()
 
         this.changes = [...newTables, ...modifiedTables, ...deletedTables]
     }
 
-    private getNewTablesChanges(currentVersion: Record<string, TableSnapshot>, newVersion: Record<string, TableSnapshot>): Change[]{
-        const newTables = Object.keys(newVersion).filter(tableName => !currentVersion[tableName]).map(tableName => newVersion[tableName])
+    private getNewTablesChanges(): Change[]{
+        const newTables = Object.keys(this.newVersion).filter(tableName => !this.currentVersion[tableName]).map(tableName => this.newVersion[tableName])
 
         return newTables.map(tableInfo =>new Change(new AddTable(tableInfo), new DropTable(tableInfo)))
     }
 
-    private getDeletedTablesChanges(currentVersion: Record<string, TableSnapshot>, newVersion: Record<string, TableSnapshot>): Change[]{
-        const deletedTables = Object.keys(currentVersion).filter(tableName => !newVersion[tableName]).map(tableName => currentVersion[tableName])
+    private getDeletedTablesChanges(): Change[]{
+        const deletedTables = Object.keys(this.currentVersion).filter(tableName => !this.newVersion[tableName]).map(tableName => this.currentVersion[tableName])
 
         return deletedTables.map(tableInfo =>new Change(new DropTable(tableInfo), new AddTable(tableInfo)))
     }
 
-    private getModifiedTablesChanges(currentVersion: Record<string, TableSnapshot>, newVersion: Record<string, TableSnapshot>): Change[]{
-        const modifiedTables = Object.keys(newVersion).filter(tableName => currentVersion[tableName]).map(tableName => ({newVersion: newVersion[tableName], current: currentVersion[tableName]}) )
+    private getModifiedTablesChanges(): Change[]{
+        const modifiedTables = Object.keys(this.newVersion).filter(tableName => this.currentVersion[tableName]).map(tableName => ({newVersion: this.newVersion[tableName], current: this.currentVersion[tableName]}) )
 
         const changes = modifiedTables
           .map(db=> ({...db, change: new ModifyTable(db.current, db.newVersion)}))

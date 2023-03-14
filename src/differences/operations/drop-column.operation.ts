@@ -1,8 +1,9 @@
-import { ColumnInfo } from "../../column.types";
+
+import { ColumnSnapshot } from "../../migrations/snapshot.types";
 import { Operation } from "./operation.type";
 
-export class DropColumn implements Operation {
-    constructor(private readonly column: ColumnInfo){}
+export class DropColumn<T> implements Operation {
+    constructor(private readonly column: ColumnSnapshot<T>){}
 
     apply(): string {
         return `dropColumn(${JSON.stringify(this.column.name)})`

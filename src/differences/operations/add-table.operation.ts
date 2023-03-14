@@ -1,11 +1,11 @@
 import {Operation} from './operation.type'
-import { TableSnapshot } from '../../table.types'
 import { AddColumn } from './add-column.operation'
 import { AbstractTableOperation } from './abstract-table.operation'
 import { AddIndex } from './add-index.operation'
+import { TableSnapshot } from '../../migrations/snapshot.types'
 
-export class AddTable extends AbstractTableOperation implements Operation{
-    constructor(readonly tableInfo: TableSnapshot){
+export class AddTable<T> extends AbstractTableOperation implements Operation{
+    constructor(readonly tableInfo: TableSnapshot<T>){
       super()
     }
 
@@ -22,7 +22,6 @@ export class AddTable extends AbstractTableOperation implements Operation{
     }
 
     apply(){
-        const internalChanges = this.getNewColumns()
         return `createTable(${JSON.stringify(this.tableInfo.name)}, ${this.applyInternalChanges()})`
     }
 }

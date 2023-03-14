@@ -1,7 +1,7 @@
 import { Column, Table } from "@knestjs/core";
 
 @Table({
-    tableName: 'user'
+    name: 'user'
 })
 export class UserModel {
     @Column({
