@@ -1,10 +1,16 @@
 {
   "name": "knestjs",
   "private": true,
+  "scripts": {
+    "build": "lerna run build",
+    "test": "jest --config jest.ts",
+    "test:cov": "jest --coverage --config jest.ts"
+  },
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
+    "jest": "^29.5.0",
     "lerna": "^6.5.1"
   }
 }

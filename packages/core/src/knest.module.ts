@@ -1,26 +1,8 @@
 import {Module, Global, DynamicModule} from '@nestjs/common'
 import knexConstructor from 'knex'
-import {KNEX_INSTANCE, KNEST_MIGRATIONS_CONFIG, KNEST_MODELS} from './constants'
+import {KNEX_INSTANCE, KNEST_MIGRATIONS_CONFIG} from './constants'
 import {MigrationsService} from './migrations/migrations.service'
-import {KnestModelsService} from './migrations/knest-models.service'
-import {getTableProvider} from './helpers/get-table-provider'
 import { KnestModuleConfig } from './types'
-
-
-@Module({
-    providers: [KnestModelsService]
-})
-class KnestFeatureModule {
-    static forFeature(models: unknown[]){
-        return {
-            module: KnestFeatureModule,
-            providers: [
-                {provide: KNEST_MODELS, useValue: models},
-                ...models.map(getTableProvider)
-            ]
-        }
-    }
-}
 
 @Module({
     providers: [MigrationsService],
@@ -38,6 +20,4 @@ export class KnestModule {
             exports: [KNEX_INSTANCE]
         }
     }
-
-    static forFeature = KnestFeatureModule.forFeature
 }

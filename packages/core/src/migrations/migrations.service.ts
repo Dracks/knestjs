@@ -1,7 +1,6 @@
 import {Injectable, Inject, OnModuleInit, OnApplicationShutdown} from '@nestjs/common'
 import {Knex} from 'knex'
 import {promises as fs} from 'fs'
-import {Constructor} from 'type-fest'
 import * as path from 'path'
 import {KNEST_MIGRATIONS_CONFIG, KNEST_SNAPSHOT_NAME, KNEX_INSTANCE} from '../constants'
 import {MigrationsConfig} from '../types'
@@ -11,7 +10,7 @@ import { TableSnapshotFactory } from './table-snapshot'
 
 @Injectable()
 export class MigrationsService implements OnModuleInit, OnApplicationShutdown {
-    private readonly models: Constructor<unknown>[] = []
+    private readonly models: TableSnapshotFactory<unknown>[] = []
     private snapshot?: Snapshot
     private snapshotFilePath: string
 
@@ -43,7 +42,7 @@ export class MigrationsService implements OnModuleInit, OnApplicationShutdown {
         await this.knex.destroy()
     }
 
-    registerModels(models: Constructor<unknown>[]){
+    registerModels(models: TableSnapshotFactory<unknown>[]){
         models.forEach(model => this.models.push(model))
     }
 
@@ -54,8 +53,7 @@ export class MigrationsService implements OnModuleInit, OnApplicationShutdown {
 
     async makeMigrations(){
         const currentVersion :Snapshot = this.snapshot ?? {knestVersion:'', db: {}, version: 0};
-        const newTablesVersion = this.models.map(model => new TableSnapshotFactory(model))
-        const registeredDb = newTablesVersion.reduce((ac, obj) => {
+        const registeredDb = this.models.reduce((ac, obj) => {
           ac[obj.name] = obj.build()
           return ac
       }, {} as Record<string, TableSnapshot<unknown>>)

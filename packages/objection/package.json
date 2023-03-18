@@ -2,7 +2,14 @@
   "name": "@knestjs/objection",
   "version": "0.0.1-alpha",
   "depencencies": {
-    "@knestjs/core": "0.2.0"
+    "@knestjs/core": "0.2.0",
+    "type-fest": "^3.6.1"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^9.0.0",
+    "knex": "^2.4.2",
+    "sqlite3": "^5.1.4",
+    "objection": "3.0.1"
   },
   "description": "> TODO: description",
   "keywords": [
@@ -30,7 +37,6 @@
   },
   "scripts": {
     "test": "jest --config jest.ts",
-    "test:cov": "jest --coverage --config jest.ts",
     "build": "tsc",
     "build:watch": "tsc --watch"
   },

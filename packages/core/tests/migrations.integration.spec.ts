@@ -3,7 +3,7 @@ import {INestApplication} from '@nestjs/common'
 import * as path from 'path'
 import {promises as fs} from 'fs'
 
-import {KnestModule, MigrationsService} from '../src'
+import {KnestModule, MigrationsService, TableSnapshotFactory} from '../src'
 import { UserModel } from './models/user.model'
 import { GroupModel } from './models/group.model'
 import {oldSnapshot1} from './mocks/previous-version'
@@ -43,11 +43,12 @@ describe('Integration tests of migrations', ()=>{
                         snapshotName,
                     }
                 }),
-                KnestModule.forFeature([UserModel])
             ],
             }).compile();
 
             app = moduleFixture.createNestApplication();
+
+            app.get(MigrationsService).registerModels([new TableSnapshotFactory(UserModel)] as TableSnapshotFactory<unknown>[])
         })
 
         afterEach(async ()=>{
@@ -80,7 +81,7 @@ describe('Integration tests of migrations', ()=>{
         })
 
         it('Multiple tables from 0', async ()=>{
-            app.get(MigrationsService).registerModels([GroupModel])
+            app.get(MigrationsService).registerModels([new TableSnapshotFactory(GroupModel)] as TableSnapshotFactory<unknown>[])
 
             await app.init()
 

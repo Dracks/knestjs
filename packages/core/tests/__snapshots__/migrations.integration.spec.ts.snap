@@ -174,24 +174,24 @@ exports[`Integration tests of migrations makemigrations Multiple tables from 0 1
 
 exports[`Integration tests of migrations makemigrations Multiple tables from 0 2`] = `
 "
-exports.up = (knex) => knex.schema.createTable("GroupModel", (table) => {
-    table.increments("id");
-    table.string("name", 255).notNullable();
-    table.string("role", 51).notNullable();
-    table.datetime("created").notNullable();
-    table.index(["role"], "idx_privileges");
-})
-  .createTable("UserModel", (table) => {
+exports.up = (knex) => knex.schema.createTable("UserModel", (table) => {
     table.increments("id");
     table.string("user", 255).notNullable();
     table.string("password", 51).nullable();
     table.integer("age").nullable();
     table.datetime("created").notNullable();
     table.index(["user"], "user_idx");
+})
+  .createTable("GroupModel", (table) => {
+    table.increments("id");
+    table.string("name", 255).notNullable();
+    table.string("role", 51).notNullable();
+    table.datetime("created").notNullable();
+    table.index(["role"], "idx_privileges");
 });
 
-exports.down = (knex) => knex.schema.dropTable("GroupModel")
-  .dropTable("UserModel");
+exports.down = (knex) => knex.schema.dropTable("UserModel")
+  .dropTable("GroupModel");
 "
 `;
 
