@@ -1,5 +1,5 @@
 
-import { IndexSnapshot } from "migrations/snapshot.types";
+import { IndexSnapshot } from "../../migrations/snapshot.types";
 import { Operation } from "./operation.type";
 
 export class DropIndex implements Operation {

@@ -1,4 +1,4 @@
-import { CharColumnConfig, ColumnType, DateTimeColumnConfig, FloatColumnConfig, IntColumnConfig } from "column.types"
+import { CharColumnConfig, ColumnType, DateTimeColumnConfig, FloatColumnConfig, IntColumnConfig } from "../column.types"
 
 export interface BaseColumnSnapshot<T> {
     name: string,
