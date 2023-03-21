@@ -8,6 +8,27 @@ export interface SqliteConfig {
     useNullAsDefault: true
 }
 
+interface DbWithConnection {
+    version?: string
+    connection: {
+        host : string,
+        port?: number,
+        user : string
+        password : string
+        database : string
+    }
+}
+
+export interface MySql extends DbWithConnection{
+    client: 'mysql'
+}
+
+export interface PostgreSql extends Omit<DbWithConnection, 'connection'> {
+    client: 'pg'
+    connection: DbWithConnection['connection'] | string,
+    searchPath: string[] | ['knex', 'public']
+}
+
 
 export interface MigrationsConfig  {
     folder: string
@@ -16,7 +37,7 @@ export interface MigrationsConfig  {
 }
 
 export interface KnestModuleConfig {
-    db: SqliteConfig,
+    db: SqliteConfig | MySql | PostgreSql,
     migrations: MigrationsConfig
 }
 

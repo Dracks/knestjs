@@ -14,7 +14,7 @@ export class TableSnapshotFactory<T> {
     readonly columns: ColumnSnapshot<T>[]
 
 
-  constructor(private readonly model: Constructor<T>){
+  constructor(readonly model: Constructor<T>){
       this.name = getTableName<T>(model)
       this.tableMetadata = Reflect.getMetadata(KNEST_TABLE_INFO, model) ?? {};
       const columns : ColumnInfo<T>[]= Reflect.getMetadata(KNEST_COLUMNS_INFO, model) ?? [];
