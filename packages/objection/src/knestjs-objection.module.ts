@@ -1,5 +1,5 @@
 import { DynamicModule, Module } from "@nestjs/common";
-import { TableSnapshotFactory } from '@knestjs/core'
+import { KnestModule, TableSnapshotFactory } from '@knestjs/core'
 import {Class} from 'type-fest'
 import { KNEST_OBJECTION_MODELS } from "./constants";
 import { KnestModelsService } from "./knest-models.service";
@@ -9,7 +9,9 @@ import { getTableProvider } from "./get-table-provider";
     providers: [KnestModelsService]
 })
 export class KnestObjectionModule {
-    static forFeature(models: Class<object>[]): DynamicModule{
+    static forRoot = KnestModule.forRoot;
+    
+    static forFeature(models: Class<unknown>[]): DynamicModule{
         const snapshotFactories = models.map(model => new TableSnapshotFactory(model))
         return {
             module: KnestObjectionModule,

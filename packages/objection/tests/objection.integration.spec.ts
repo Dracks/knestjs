@@ -6,7 +6,7 @@ import {promises as fs} from 'fs'
 import {KnestObjectionModule, Repository, } from '../src'
 import { UserModel } from './models/user.model'
 import { GroupModel } from './models/group.model'
-import { KnestModule, MigrationsService } from '@knestjs/core'
+import { MigrationsService } from '@knestjs/core'
 
 import 'reflect-metadata'
 import { getModelKey } from '../src/get-table-provider'
@@ -23,7 +23,7 @@ describe('Integration tests of migrations', ()=>{
     describe('makemigrations', ()=>{
         beforeEach(async ()=>{
             const moduleFixture: TestingModule = await Test.createTestingModule({
-                imports: [KnestModule.forRoot({
+                imports: [KnestObjectionModule.forRoot({
                     db: {
                         client: 'sqlite3',
                         connection: {
