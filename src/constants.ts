@@ -1,7 +1,0 @@
-export const KNEX_INSTANCE='KNEX_INSTANCE'
-export const KNEST_MODELS='KNEST_MODELS'
-export const KNEST_MODEL='KNEST_MODEL'
-export const KNEST_TABLE_INFO='custom:KNEST_TABLE_INFO'
-export const KNEST_COLUMNS_INFO='custom:KNEST_COLUMNS_INFO'
-export const KNEST_MIGRATIONS_CONFIG='KNEST_MIGRATIONS_CONFIG'
-export const KNEST_SNAPSHOT_NAME='last-version.snapshot'

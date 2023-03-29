@@ -1,35 +1,16 @@
 {
-  "name": "@knestjs/core",
-  "version": "0.1.0",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "repository": {
-      "type": "git",
-      "url": "https://github.com/Dracks/knestjs.git"
-  },
-  "keywords": ["nestjs", "knexjs", "ORM", "migrations", "automigrations", "django-like"],
+  "name": "knestjs",
+  "private": true,
   "scripts": {
+    "build": "lerna run build",
     "test": "jest --config jest.ts",
-    "test:cov": "jest --coverage --config jest.ts",
-    "build": "tsc",
-    "build:watch": "tsc --watch"
+    "test:cov": "jest --coverage --config jest.ts"
   },
-  "dependencies": {
-    "reflect-metadata": "^0.1.13",
-    "ts-pattern": "^4.2.1"
-  },
-  "peerDependencies": {
-    "@nestjs/common": "^9.0.0",
-    "knex": "^2.4.2",
-    "sqlite3": "^5.1.4"
-  },
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
-    "@nestjs/platform-express": "^9.3.9",
-    "@nestjs/testing": "^9.3.9",
-    "@types/jest": "^29.4.0",
-    "jest": "^29.4.3",
-    "ts-jest": "^29.0.5",
-    "ts-node": "^10.9.1",
-    "type-fest": "^3.6.1"
+    "jest": "^29.5.0",
+    "lerna": "^6.5.1"
   }
 }

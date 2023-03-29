@@ -1,0 +1,7 @@
+export * from './knest.module'
+export * from './migrations/migrations.service'
+export * from './decorators/table.decorator'
+export * from './decorators/column.decorator'
+export {KNEX_INSTANCE} from './constants'
+export {TableSnapshotFactory} from './migrations/table-snapshot'
+export {TableSnapshot} from './migrations/snapshot.types'

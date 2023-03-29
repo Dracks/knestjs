@@ -26,9 +26,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm run test:cov
+    - name: Install dependencies
+      run: npm ci
+    - name: Build @knestjs/core
+      run: npx lerna run build --scope "@knestjs/core"
+    - name: Build @knestjs/objection
+      run: npx lerna run build --scope "@knestjs/objection"
+    - name: Run tests
+      run: npm run test:cov
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       # Seems there is slightly differences in the coverage of both versions

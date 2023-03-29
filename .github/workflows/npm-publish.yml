@@ -1,11 +1,11 @@
 # This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
 # For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
 
-name: Node.js Package
+name: Node.js publish package
 
 on:
     push:
-        tags: [core@v*]
+        tags: [core@v*, objection@v*]
 #  release:
 #    types: [created]
 
@@ -18,6 +18,8 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
+      - name: Build core
+        run: npx lerna run build --scope "@knestjs/core"
       - run: npm test
 
   publish-gpr:
@@ -33,7 +35,20 @@ jobs:
           node-version: 16
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
-      - run: npm run build
-      - run: npm publish --access public
+
+      - name: Build @knestjs/core
+        run: npx lerna run build --scope "@knestjs/core"
+
+      - run: npm publish ./packages/core --access public
+        if: contains(github.ref, 'core@v')
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - name: Build @knestjs/objection
+        if: contains(github.ref, 'objection@v')
+        run: npx lerna run build --scope "@knestjs/objection"
+      
+      - run: npm publish ./packages/objection --access public
+        if: contains(github.ref, 'objection@v')
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
