@@ -10,8 +10,8 @@ import { getTableProvider } from "./get-table-provider";
 })
 export class KnestObjectionModule {
     static forRoot = KnestModule.forRoot;
-    
-    static forFeature(models: Class<unknown>[]): DynamicModule{
+
+    static forFeature(models: Class<object>[]): DynamicModule{
         const snapshotFactories = models.map(model => new TableSnapshotFactory(model))
         return {
             module: KnestObjectionModule,

@@ -1,8 +1,8 @@
 {
   "name": "@knestjs/objection",
-  "version": "0.0.1-alpha",
+  "version": "0.2.0",
   "depencencies": {
-    "@knestjs/core": "0.2.0",
+    "@knestjs/core": "0.2.0-alpha",
     "type-fest": "^3.6.1"
   },
   "peerDependencies": {

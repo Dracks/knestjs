@@ -4,7 +4,7 @@ const config : Config = {
     collectCoverageFrom: [
       "**/*.(t|j)s"
     ],
-    coverageDirectory: "../coverage",
+    coverageDirectory: "./coverage",
     coverageReporters: [
         "text",
         "cobertura"
